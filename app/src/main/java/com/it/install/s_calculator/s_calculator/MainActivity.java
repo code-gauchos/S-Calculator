@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private double _percentage;
     private double _result;
     private String _operandScreen;
     private TextView _screenOperandView;
@@ -13,6 +15,10 @@ public class MainActivity extends AppCompatActivity {
 
     // constructor
     public MainActivity() {
+        this.clearResult();
+    }
+
+    public void clearResult(View view) {
         this.clearResult();
     }
 
@@ -54,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sevenButtonOnClick(View view) {
-//Toast.makeText(getApplicationsContext(), "This is number 7", Toast.LE
+//Toast.makeText(getApplicationsContext(), "This is number 7", Toast.LENGTH_LONG).show();
         this.setOperands("7");
 
     }
@@ -70,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void zeroButtonOnClick(View view) {
         this.setOperands("0");
+    }
+
+    public void minusButtonOnClick(View view) {
+        this._operandPair.OperatorType = "-";
     }
 
     public void decimalButtonOnClick(View view) {
@@ -109,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
         this._operandScreen += " + ";
 
         this._screenOperandView = (TextView) findViewById(R.id.screenOperands);
+        this._operandScreen = this._operandPair.FirstOperand;
 
         this._screenOperandView.setText(this._operandScreen);
     }
@@ -120,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
             this._operandScreen = this._operandPair.FirstOperand;
         } else {
             this._operandPair.SecondOperand += digit;
-
+            this._percentage = Double.valueOf(this._operandPair.SecondOperand) / 100;
             this._operandScreen = this._operandPair.FirstOperand + " " +
                     this._operandPair.OperatorType + " " + this._operandPair.SecondOperand;
         }
@@ -131,51 +142,55 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void calculateResult(View view) {
-        switch (this._operandPair.OperatorType) {
-            case "+":
+        if (this._operandPair.OperatorType != "") {
+            switch (this._operandPair.OperatorType) {
+                case "+":
 
 //                Toast.makeText(getApplicationContext(), "This is _firstOperand:" +
 //                                this._firstOperand + " and this is second: " + this._secondOperand,
 //                        Toast.LENGTH_LONG).show();
 
-                this._result = Double.valueOf(this._operandPair.FirstOperand) +
-                        Double.valueOf(this._operandPair.SecondOperand);
+                    this._result = Double.valueOf(this._operandPair.FirstOperand) +
+                            Double.valueOf(this._operandPair.SecondOperand);
 
-                break;
+                    break;
 
-            case "-":
-                this._result = Double.valueOf(this._operandPair.FirstOperand) -
-                        Double.valueOf(this._operandPair.SecondOperand);
+                case "-":
+                    this._result = Double.valueOf(this._operandPair.FirstOperand) -
+                            Double.valueOf(this._operandPair.SecondOperand);
 
-                break;
+                    break;
 
-            case "*":
-                this._result = Double.valueOf(this._operandPair.FirstOperand) *
-                        Double.valueOf(this._operandPair.SecondOperand);
+                case "*":
+                    this._result = Double.valueOf(this._operandPair.FirstOperand) *
+                            Double.valueOf(this._operandPair.SecondOperand);
 
-                break;
+                    break;
 
-            case "/":
-                try {
-                    if (this._operandPair.SecondOperand.equals(0) == false) {
-                        this._result = Double.valueOf(this._operandPair.FirstOperand) /
-                                Double.valueOf(this._operandPair.SecondOperand);
+                case "/":
+                    try {
+                        if (this._operandPair.SecondOperand.equals(0)) {
+                            this._result = Double.valueOf(this._operandPair.FirstOperand) /
+                                    Double.valueOf(this._operandPair.SecondOperand);
+                        }
+
+                    } catch (ArithmeticException excp) {
+
+                        return;
                     }
 
-                } catch (ArithmeticException excp) {
+                    break;
 
-                    return;
-                }
+            }
 
-                break;
-        }
+            final TextView screenResultView = (TextView) findViewById(R.id.screenResult);
 
-        final TextView screenResultView = (TextView) findViewById(R.id.screenResult);
-
-        screenResultView.setText("" + this._result);
+            screenResultView.setText("" + this._result);
 
 //        Toast.makeText(getApplicationContext(), "This equals " + this._result, Toast.LENGTH_LONG).show();
 
-        this.clearResult();
+            this.clearResult();
+        }
     }
+
 }

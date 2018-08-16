@@ -16,7 +16,9 @@
 
         android:text=""
 
-        android:textSize="30sp" />
+        android:textColor="#0051ff"
+
+        android:textSize="40sp" />
 
     <TextView
         android:id="@+id/screenResult"
@@ -29,5 +31,7 @@
 
         android:text=""
 
-        android:textSize="16sp" />
+        android:textColor="#ff0000"
+
+        android:textSize="28.5sp" />
 </LinearLayout>

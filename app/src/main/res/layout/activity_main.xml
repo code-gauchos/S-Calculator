@@ -447,7 +447,7 @@
 
                 android:layout_weight="1"
 
-                android:background="@color/colorPrimary"
+                android:background="@color/colorPrimaryDark"
 
                 android:minHeight="80dp"
 
@@ -483,6 +483,8 @@
 
                 android:id="@+id/btn_equal"
 
+                style="@android:style/Animation.Translucent"
+
                 android:layout_width="wrap_content"
 
                 android:layout_height="match_parent"
@@ -498,7 +500,6 @@
                 android:text="="
 
                 android:textColor="#fff"
-
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
